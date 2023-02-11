@@ -7,6 +7,8 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.3.0"
+diesel = { version = "2.0.3", features=["postgres"] }
+dotenv = "0.15.0"
 futures = "0.3.26"
 serde = { version = "1.0.152", features = ["std", "derive"] }
 serde_json = { version = "1.0.93", default-features = false, features = ["alloc"]}
