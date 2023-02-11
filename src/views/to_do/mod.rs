@@ -3,6 +3,7 @@ use actix_web::web;
 use super::path::Path;
 
 mod create;
+mod delete;
 mod edit;
 mod get;
 mod utils;
@@ -22,5 +23,9 @@ pub fn item_factory(app: &mut web::ServiceConfig) {
     .route(
         &base_path.define(String::from("/edit")),
         web::put().to(edit::edit),
+    )
+    .route(
+        &base_path.define(String::from("/delete")),
+        web::delete().to(delete::delete),
     );
 }
