@@ -6,16 +6,26 @@ use crate::{
     to_do::{to_do_factory, ItemTypes},
 };
 
+use crate::diesel;
+use diesel::prelude::*;
+
+use crate::database::establish_connection;
+use crate::models::item::item::Item;
+use crate::schema::to_do;
+
 pub fn return_state() -> ToDoItems {
-    let state: Map<String, Value> = read_file("./state.json");
+    let mut connection = establish_connection();
+
+    let items = to_do::table
+        .order(to_do::columns::id.asc())
+        .load::<Item>(&mut connection)
+        .unwrap();
 
     let mut array_buffer = Vec::new();
 
-    for (key, value) in state {
-        let item_type: String = String::from(value.as_str().unwrap());
-        let item: ItemTypes = to_do_factory(&item_type, &key).unwrap();
+    for item in items {
+        let item: ItemTypes = to_do_factory(&item.status, &item.title).unwrap();
         array_buffer.push(item);
     }
-    let return_package: ToDoItems = ToDoItems::new(array_buffer);
-    return_package
+    ToDoItems::new(array_buffer)
 }
