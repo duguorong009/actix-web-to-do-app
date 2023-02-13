@@ -1,33 +1,23 @@
 use actix_web::{web, HttpResponse};
-use serde_json::{Map, Value};
 
-use crate::{
-    json_serialization::to_do_item::ToDoItem, processes::process_input, state::read_file,
-    to_do::to_do_factory,
-};
+use crate::json_serialization::to_do_item::ToDoItem;
 
 use super::utils::return_state;
 
+use crate::database::establish_connection;
+use crate::diesel;
+use crate::schema::to_do;
+use diesel::prelude::*;
+
 pub async fn edit(to_do_item: web::Json<ToDoItem>) -> HttpResponse {
-    let state: Map<String, Value> = read_file("./state.json");
+    let title_ref: String = to_do_item.title.clone();
 
-    let title_ref: &str = &to_do_item.title.clone();
-    let title: String = to_do_item.title.clone();
+    let mut connection = establish_connection();
+    let results = to_do::table.filter(to_do::columns::title.eq(title_ref));
 
-    let status: String;
-    match &state.get(title_ref) {
-        Some(result) => status = result.to_string().replace('\"', ""),
-        None => return HttpResponse::NotFound().json(format!("{} not in state", title_ref)),
-    }
-
-    if &status == &to_do_item.status {
-        return HttpResponse::Ok().json(return_state());
-    }
-
-    match to_do_factory(&status, &title) {
-        Err(_item) => return HttpResponse::BadRequest().json(format!("{} not accepted", status)),
-        Ok(item) => process_input(item, String::from("edit"), &state),
-    }
+    let _ = diesel::update(results)
+        .set(to_do::columns::status.eq("done"))
+        .execute(&mut connection);
 
     HttpResponse::Ok().json(return_state())
 }
