@@ -4,7 +4,6 @@ mod app;
 mod auth;
 mod path;
 mod to_do;
-pub mod token;
 mod users;
 
 pub fn views_factory(app: &mut web::ServiceConfig) {
