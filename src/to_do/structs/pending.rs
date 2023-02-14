@@ -1,7 +1,4 @@
-use super::{
-    base::Base,
-    traits::{create::Create, delete::Delete, edit::Edit, get::Get},
-};
+use super::base::Base;
 
 pub struct Pending {
     pub super_struct: Base,
@@ -13,11 +10,3 @@ impl Pending {
         Pending { super_struct: base }
     }
 }
-
-impl Create for Pending {}
-
-impl Delete for Pending {}
-
-impl Edit for Pending {}
-
-impl Get for Pending {}

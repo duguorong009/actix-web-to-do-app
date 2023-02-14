@@ -1,8 +1,5 @@
-use serde_json::{Map, Value};
-
 use crate::{
     json_serialization::to_do_items::ToDoItems,
-    state::read_file,
     to_do::{to_do_factory, ItemTypes},
 };
 
