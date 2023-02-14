@@ -11,6 +11,7 @@ mod utils;
 pub fn item_factory(app: &mut web::ServiceConfig) {
     let base_path: Path = Path {
         prefix: String::from("/item"),
+        backend: true,
     };
     app.route(
         &base_path.define(String::from("/create/{title}")),

@@ -20,6 +20,10 @@ pub async fn login(credentials: web::Json<Login>) -> HttpResponse {
     if users.len() == 0 {
         return HttpResponse::NotFound().await.unwrap();
     } else if users.len() > 1 {
+        log::error!(
+            "multiple users have the username: {}",
+            credentials.username.clone()
+        );
         return HttpResponse::Conflict().await.unwrap();
     }
 
