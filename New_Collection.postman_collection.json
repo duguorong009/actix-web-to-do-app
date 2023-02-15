@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "3c10be68-6306-4e43-8050-abd2e512d773",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "1_create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var result = pm.response.json()",
+							"pm.test(\"response is ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"returns one pending item\", function(){",
+							"if (result[\"pending_items\"].length !== 1){",
+							"throw new Error(",
+							"\"returns the wrong number of pending items\");",
+							"}",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/v1/item/create/washing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"create",
+						"washing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2_create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var result = pm.response.json()",
+							"pm.test(\"response is ok\", function () {",
+							"pm.response.to.have.status(200);",
+							"}); pm.test(\"returns two pending item\", function(){",
+							"if (result[\"pending_items\"].length !== 2){",
+							"throw new Error(",
+							"\"returns the wrong number of pending items\");",
+							"}",
+							"}); pm.test(\"Pending item has the correct title\",",
+							"function(){",
+							"if (result[\"pending_items\"][0][\"title\"] !==",
+							"\"washing\"){",
+							"    throw new Error(",
+							"\"title of the pending item is not 'washing'\");",
+							"}",
+							"}); pm.test(\"Pending item has the correct status\",",
+							"function(){",
+							"if (result[\"pending_items\"][0][\"status\"] !==",
+							"\"pending\"){",
+							"throw new Error(\"status of the pending item is not 'pending'\");",
+							"}",
+							"}); pm.test(\"Pending item has the correct title\",",
+							"function(){",
+							"if (result[\"pending_items\"][1][\"title\"] !==",
+							"\"cooking\"){",
+							"throw new Error(\"title of the pending item is not 'cooking'\");",
+							"}",
+							"}); pm.test(\"Pending item has the correct status\",",
+							"function(){",
+							"if (result[\"pending_items\"][1][\"status\"] !==",
+							"\"pending\"){",
+							"throw new Error(\"status of the pending item is not 'pending'\");",
+							"}",
+							"}); pm.test(\"returns zero done items\", function(){",
+							"if (result[\"done_items\"].length !== 0){",
+							"throw new Error(",
+							"\"returns the wrong number of done items\");",
+							"}",
+							"}); pm.test(\"checking pending item count\", function(){",
+							"if (result[\"pending_item_count\"] !== 2){",
+							"throw new Error(",
+							"\"pending_item_count needs to be two\");",
+							"}",
+							"}); pm.test(\"checking done item count\", function(){",
+							"if (result[\"done_item_count\"] !== 0){",
+							"    throw new Error(\"done_item_count needs to be zero\");",
+							"}",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/v1/item/create/cooking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"item",
+						"create",
+						"cooking"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo2fQ.uVo7u877IT2GEMpB_gxVtxhMAYAJD8W_XiUoNvR7_iM",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "user-token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
