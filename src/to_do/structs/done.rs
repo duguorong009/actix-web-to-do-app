@@ -10,3 +10,18 @@ impl Done {
         Done { super_struct: base }
     }
 }
+
+#[cfg(test)]
+mod done_test {
+    use super::*;
+
+    #[test]
+    fn new() {
+        let expected_status: String = String::from("done");
+        let title: String = String::from("excel date");
+        let expected_title: String = String::from("excel date");
+        let done: Done = Done::new(&title);
+        assert_eq!(expected_status, done.super_struct.status);
+        assert_eq!(expected_title, done.super_struct.title);
+    }
+}

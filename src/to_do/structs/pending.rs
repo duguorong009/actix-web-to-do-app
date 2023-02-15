@@ -10,3 +10,18 @@ impl Pending {
         Pending { super_struct: base }
     }
 }
+
+#[cfg(test)]
+mod pending_test {
+    use super::*;
+
+    #[test]
+    fn new() {
+        let expected_status: String = String::from("pending");
+        let title: String = String::from("washing");
+        let expected_title: String = String::from("washing");
+        let pending: Pending = Pending::new(&title);
+        assert_eq!(expected_status, pending.super_struct.status);
+        assert_eq!(expected_title, pending.super_struct.title);
+    }
+}

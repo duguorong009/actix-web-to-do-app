@@ -14,3 +14,19 @@ impl Base {
         };
     }
 }
+
+#[cfg(test)]
+mod base_tests {
+    use super::Base;
+
+    #[test]
+    fn new() {
+        let title: String = String::from("test title");
+        let expected_title: String = String::from("test title");
+        let status: String = String::from("test status");
+        let expected_status: String = String::from("test status");
+        let new_base_struct: Base = Base::new(&title, &status);
+        assert_eq!(expected_title, new_base_struct.title);
+        assert_eq!(expected_status, new_base_struct.status);
+    }
+}
