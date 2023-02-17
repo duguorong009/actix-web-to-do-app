@@ -4,7 +4,7 @@ services:
   rust_app:
     rust_app:
         container_name: rust_app
-        image: "maxwellflitton/actix_web_application:latest"
+        image: "test/actix_web_application:latest"
         restart: always
     ports:
         - "8000:8000"
